@@ -32,17 +32,18 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 **Admin credentials:** `admin` / `admin`
 
-> **Tip:** You can use any Moodle 5.1.x codebase instead — vanilla Moodle or your own fork. Place the code in `site/moodle/` before running `bin/init` and the clone step will be skipped.
+> **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
 
 ## Commands
 
-| Command       | Description                                                             |
-|---------------|-------------------------------------------------------------------------|
-| `bin/init`    | First-time setup: clone, configure, and install                         |
-| `bin/stop`    | Stop the Docker services — use this when switching to another demo site |
-| `bin/start`   | Start the Docker services                                               |
-| `bin/update`  | Upgrade to latest minor MuTMS release                                   |
-| `bin/destroy` | Remove Docker containers and images                                     |
+| Command           | Description                                                             |
+|-------------------|-------------------------------------------------------------------------|
+| `bin/init`        | First-time setup: clone, configure, and install                         |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                           |
+| `bin/stop`        | Stop the Docker services — use this when switching to another demo site |
+| `bin/start`       | Start the Docker services                                               |
+| `bin/update`      | Upgrade to latest minor MuTMS release                                   |
+| `bin/destroy`     | Remove Docker containers and images                                     |
 
 `bin/destroy` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
 
