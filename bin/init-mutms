@@ -34,18 +34,18 @@ if [ ! -d "database" ]; then
     mkdir database
 fi
 
-docker-compose up -d
-if ! docker-compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
-    docker-compose restart db
-    docker-compose restart webserver
+docker compose up -d
+if ! docker compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
+    docker compose restart db
+    docker compose restart webserver
     sleep 3
 fi
 
-docker-compose exec webserver bash --login /mdc/composer_install.sh
+docker compose exec webserver bash --login /mdc/composer_install.sh
 
-docker-compose exec webserver php composer.phar install --no-dev --classmap-authoritative
+docker compose exec webserver php composer.phar install --no-dev --classmap-authoritative
 
-docker-compose exec webserver php admin/cli/install_database.php \
+docker compose exec webserver php admin/cli/install_database.php \
     --fullname="$FULLNAME" \
     --shortname="$SHORTNAME" \
     --summary="$FULLNAME" \

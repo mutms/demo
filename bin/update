@@ -21,4 +21,4 @@ fi
 cd site/moodle
 git pull
 
-docker-compose exec webserver php admin/cli/upgrade.php
+docker compose exec webserver php admin/cli/upgrade.php
