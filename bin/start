@@ -14,6 +14,10 @@ DEMO site was not initialised yet, use bin/init
     exit 1
 fi
 
-docker-compose start
+docker-compose up -d
 
 docker-compose exec db bash /mdc/mdc-wait.sh
+
+echo "
+Your $FULLNAME site is now available at http://127.0.0.1:9501/
+"
