@@ -6,7 +6,7 @@ Windows is not currently supported. Contributions welcome.
 
 ## Requirements
 
-- [Git](https://git-scm.com/)
+- [Git](https://git-scm.com/) — installed by default on macOS and most Linux distributions
 - [Docker](https://docs.docker.com/get-docker/) or [OrbStack](https://orbstack.dev/)
 
 ## Quick start
