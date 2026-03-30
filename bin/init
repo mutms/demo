@@ -28,6 +28,9 @@ if [ ! -d "database" ]; then
 fi
 
 docker-compose up -d
+if ! docker-compose exec webserver test -d /var/www/site; then
+    docker-compose restart
+fi
 
 docker-compose exec webserver bash --login /mdc/composer_install.sh
 
