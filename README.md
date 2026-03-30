@@ -66,12 +66,13 @@ Additional plugins can be installed from the [Moodle Plugins Database](https://m
 ## Directory layout
 
 ~~~
-assets/          configuration files and helper scripts
-bin/             management commands
-database/        PostgreSQL data (created by bin/init)
-dataroot/        Moodle data directory (created by bin/init)
-site/            web root; Moodle codebase cloned here by bin/init
-compose.yml      Docker Compose configuration
+assets/                 configuration files and helper scripts
+bin/                    management commands
+database/               PostgreSQL data (created by bin/init)
+dataroot/               Moodle data directory (created by bin/init)
+site/moodle/            Moodle codebase directory (git clone by bin/init)
+site/moodle/config.php  Moodle configuration file (copy of assets/config.php by bin/init)
+compose.yml             Docker Compose configuration
 ~~~
 
 ## Full package with already installed demo
