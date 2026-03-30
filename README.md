@@ -55,7 +55,7 @@ Additional plugins can be installed from the [Moodle Plugins Database](https://m
 | Command           | Description                                                                    |
 |-------------------|--------------------------------------------------------------------------------|
 | `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
-| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                  |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
 | `bin/stop`        | Stop the Docker services — use this when switching to another demo site        |
 | `bin/start`       | Start the Docker services                                                      |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
@@ -76,5 +76,5 @@ compose.yml      Docker Compose configuration
 
 ## Full package with already installed demo
 
-If you have an already installed demo, you can zip the entire `demo` directory and pass it to anybody else.
-They only need to extract it and run `bin/start` — no installation steps required.
+If you have an already installed demo site with sample data, you can zip the entire `demo` directory and pass it to anybody else.
+If they have Docker or OrbStack they only need to extract it and run `bin/start` — no installation steps required.
