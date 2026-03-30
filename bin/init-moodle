@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
 
-if [ -f "destroy" ]; then
-    cd ..
-fi
-
-if [ ! -f "assets/webserver/apache2.conf" ]; then
-    echo "
-invalid current directory, commands can be executed only from the demo directory
-"
-    exit 1
-fi
+# First find out if this was called from symlink,
+# then find the real path of parent directory.
+# This is needed because macOS does not have GNU realpath.
+thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
+cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
 if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
