@@ -14,7 +14,7 @@ If you have [Git](https://git-scm.com/) installed then clone this repository and
 ~~~bash
 git clone https://github.com/mutms/demo
 cd demo
-bin/init
+bin/init-mutms
 ~~~
 
 The script will:
@@ -30,7 +30,7 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 **Admin credentials:** `admin` / `admin`
 
-> **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
+> **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init-mutms`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
 
 ## Manual installation without Git
 
@@ -40,7 +40,7 @@ If you do not have git binary then you can:
 2. extract demo package into `demo` directory
 3. download [MuTMS 5.1 release package](https://github.com/mutms/mutms/releases) or [Moodle 5.1 release package](https://download.moodle.org/releases/latest/)
 4. extract release package into `demo/site/moodle` directory
-5. open Command line shell, go to `demo` directory, and run `bin/init` command
+5. open Command line shell, go to `demo` directory, and run `bin/init-mutms` or `bin/init-moodle` command
 
 Once complete, the site is available at **http://127.0.0.1:9501/**
 
@@ -54,7 +54,7 @@ Additional plugins can be installed from the [Moodle Plugins Database](https://m
 
 | Command           | Description                                                                    |
 |-------------------|--------------------------------------------------------------------------------|
-| `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
+| `bin/init-mutms`  | First-time setup of MuTMS: clone, configure, and install                       |
 | `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
 | `bin/stop`        | Stop the Docker services — use this when switching to another demo site        |
 | `bin/start`       | Start the Docker services                                                      |
@@ -68,10 +68,10 @@ Additional plugins can be installed from the [Moodle Plugins Database](https://m
 ~~~
 assets/                 configuration files and helper scripts
 bin/                    management commands
-database/               PostgreSQL data (created by bin/init)
-dataroot/               Moodle data directory (created by bin/init)
-site/moodle/            Moodle codebase directory (git clone by bin/init)
-site/moodle/config.php  Moodle configuration file (copy of assets/config.php by bin/init)
+database/               PostgreSQL data (created by init script)
+dataroot/               Moodle data directory (created by init script)
+site/moodle/            Moodle codebase directory (git clone by init script)
+site/moodle/config.php  Moodle configuration file (copy of assets/config.php by init script)
 compose.yml             Docker Compose configuration
 ~~~
 

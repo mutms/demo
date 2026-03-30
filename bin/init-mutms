@@ -13,7 +13,6 @@ fi
 
 FULLNAME="${1:-MuTMS Demo}"
 SHORTNAME="${2:-MuTMS}"
-SUMMARY="${3:-MuTMS Demo Site}"
 
 if [ ! -d "site" ]; then
     mkdir site
@@ -49,7 +48,7 @@ docker-compose exec webserver php composer.phar install --no-dev --classmap-auth
 docker-compose exec webserver php admin/cli/install_database.php \
     --fullname="$FULLNAME" \
     --shortname="$SHORTNAME" \
-    --summary="$SUMMARY" \
+    --summary="$FULLNAME" \
     --adminemail="admin@example.com" \
     --adminpass="admin" \
     --agree-license

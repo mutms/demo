@@ -15,4 +15,7 @@ if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
 fi
 
-exec bin/init "Moodle Demo" "Moodle" "Moodle Demo Site"
+FULLNAME="${1:-Moodle Demo}"
+SHORTNAME="${2:-Moodle}"
+
+exec bin/init-mutms "$FULLNAME" "$SHORTNAME"
