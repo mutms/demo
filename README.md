@@ -1,4 +1,4 @@
-# Set up local Moodle demo site using Docker or OrbStack
+# Set up local Moodle demo site using Docker
 
 A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS_51) or [Moodle LMS](https://moodle.org/).
 
