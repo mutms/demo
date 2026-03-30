@@ -32,6 +32,8 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 **Admin credentials:** `admin` / `admin`
 
+> **Tip:** You can use any Moodle 5.1.x codebase instead — vanilla Moodle or your own fork. Place the code in `site/moodle/` before running `bin/init` and the clone step will be skipped.
+
 ## Commands
 
 | Command       | Description                                                             |
