@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ ! -f "database/postgresql.conf" ]; then
+    echo "
+DEMO site was not initialised yet, use bin/init
+"
+    exit 1
+fi
+
+docker-compose start
+
+docker-compose exec db bash /mdc/mdc-wait.sh

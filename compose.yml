@@ -1,0 +1,68 @@
+services:
+  db:
+    command:
+      - postgres
+      - -c
+      - synchronous_commit=off
+      - -c
+      - full_page_writes=off
+    environment:
+      POSTGRES_DB: moodle
+      POSTGRES_INITDB_ARGS: --no-sync
+      POSTGRES_PASSWORD: m@0dl3ing
+      POSTGRES_USER: moodle
+      PGDATA: /var/www/database
+    image: postgres:18
+    networks:
+      default: null
+    volumes:
+      - type: bind
+        source: assets/db/pgsql/mdc-wait.sh
+        target: /mdc/mdc-wait.sh
+        bind:
+          create_host_path: true
+      - type: bind
+        source: database
+        target: /var/www/database
+        bind:
+          create_host_path: true
+  webserver:
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+    environment:
+      COMPOSER_ALLOW_SUPERUSER: "1"
+      DEMO_RUNNING: "1"
+    working_dir: /var/www/site/moodle
+    image: mutms/mdc-php-apache:8.3
+    networks:
+      default: null
+    volumes:
+      - type: bind
+        source: dataroot
+        target: /var/www/dataroot
+        bind:
+          create_host_path: true
+      - type: bind
+        source: site
+        target: /var/www/site
+        bind:
+          create_host_path: true
+      - type: bind
+        source: assets/webserver/composer_install.sh
+        target: /mdc/composer_install.sh
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: assets/webserver/apache2.conf
+        target: /etc/apache2/sites-available/000-default.conf
+        bind:
+          create_host_path: true
+    ports:
+      - "127.0.0.1:9501:80"
+
+networks:
+  default:
+    name: demo_default
