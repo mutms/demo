@@ -2,10 +2,9 @@
 
 A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS_51) or [Moodle LMS](https://moodle.org/).
 
-Windows is not currently supported. Contributions welcome.
-
 ## Requirements
 
+- macOS or Linux - Windows is not currently supported, contributions welcome.
 - [Docker](https://docs.docker.com/get-docker/) or [OrbStack](https://orbstack.dev/)
 
 ## Quick start with Git
