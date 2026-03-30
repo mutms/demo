@@ -9,7 +9,7 @@ A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS
 
 ## Quick start with Git
 
-If you have [Git](https://git-scm.com/) available then clone this repository and run the init script:
+If you have [Git](https://git-scm.com/) installed then clone this repository and run the init script:
 
 ~~~bash
 git clone https://github.com/mutms/demo
