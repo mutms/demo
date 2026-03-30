@@ -1,6 +1,6 @@
-# Set up local MuTMS demo site using Docker or OrbStack
+# Set up local Moodle demo site using Docker or OrbStack
 
-A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS_51), a multi-tenant management suite for Moodle LMS.
+A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS_51) or [Moodle LMS](https://moodle.org/).
 
 Windows is not currently supported. Contributions welcome.
 
@@ -38,11 +38,11 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 | Command           | Description                                                             |
 |-------------------|-------------------------------------------------------------------------|
-| `bin/init`        | First-time setup: clone, configure, and install                         |
-| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                           |
+| `bin/init`        | First-time setup of MuTMS: clone, configure, and install                |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                            |
 | `bin/stop`        | Stop the Docker services — use this when switching to another demo site |
 | `bin/start`       | Start the Docker services                                               |
-| `bin/update`      | Upgrade to latest minor MuTMS release                                   |
+| `bin/update`      | Upgrade to the latest minor release                                     |
 | `bin/destroy`     | Remove Docker containers and images                                     |
 
 `bin/destroy` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
