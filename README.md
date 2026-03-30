@@ -34,6 +34,10 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 > **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
 
+## Installing additional plugins
+
+Additional plugins can be installed from the [Moodle Plugins Database](https://moodle.org/plugins/) via **http://127.0.0.1:9501/admin/tool/installaddon/index.php**, the same way as on any standard Moodle site.
+
 ## Commands
 
 | Command           | Description                                                             |
