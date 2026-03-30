@@ -34,12 +34,13 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `bin/init` | First-time setup: clone, configure, and install |
-| `bin/stop` | Stop the Docker services — use this when switching to another demo site |
-| `bin/start` | Start the Docker services |
-| `bin/destroy` | Remove Docker containers and images |
+| Command       | Description                                                             |
+|---------------|-------------------------------------------------------------------------|
+| `bin/init`    | First-time setup: clone, configure, and install                         |
+| `bin/stop`    | Stop the Docker services — use this when switching to another demo site |
+| `bin/start`   | Start the Docker services                                               |
+| `bin/update`  | Upgrade to latest minor MuTMS release                                   |
+| `bin/destroy` | Remove Docker containers and images                                     |
 
 `bin/destroy` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
 

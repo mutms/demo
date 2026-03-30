@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ ! -d "site/moodle" ]; then
+    echo "
+DEMO site was not initialised yet, use bin/init
+"
+    exit 1
+fi
+
+cd site/moodle
+git pull
+
+docker-compose exec webserver php admin/cli/upgrade.php
