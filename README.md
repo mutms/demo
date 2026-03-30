@@ -1,6 +1,6 @@
 # Set up local MuTMS demo site using Docker or OrbStack
 
-A self-contained local demo of [MuTMS](https://github.com/mutms/mutms), a multi-tenant management suite for Moodle LMS.
+A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS_51), a multi-tenant management suite for Moodle LMS.
 
 Windows is not currently supported. Contributions welcome.
 
