@@ -7,6 +7,10 @@ invalid current directory, commands can be executed only from the demo directory
     exit 1
 fi
 
+FULLNAME="${1:-MuTMS Demo}"
+SHORTNAME="${2:-MuTMS}"
+SUMMARY="${3:-MuTMS Demo Site}"
+
 if [ ! -d "site" ]; then
     mkdir site
 fi
@@ -38,10 +42,16 @@ docker-compose exec webserver bash --login /mdc/composer_install.sh
 
 docker-compose exec webserver php composer.phar install --no-dev --classmap-authoritative
 
-docker-compose exec webserver php admin/cli/install_database.php --fullname="MuTMS Demo" --shortname="MuTMS" --summary="MuTMS Demo Site" --adminemail="admin@example.com" --adminpass="admin" --agree-license "$@"
+docker-compose exec webserver php admin/cli/install_database.php \
+    --fullname="$FULLNAME" \
+    --shortname="$SHORTNAME" \
+    --summary="$SUMMARY" \
+    --adminemail="admin@example.com" \
+    --adminpass="admin" \
+    --agree-license
 
 echo "
-Your MuTMS demo site is now available at http://127.0.0.1:9501/
+Your $FULLNAME site is now available at http://127.0.0.1:9501/
   username is 'admin'
   password is 'admin'
 "
