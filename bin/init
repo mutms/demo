@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -f "destroy" ]; then
+    cd ..
+fi
+
 if [ ! -f "assets/webserver/apache2.conf" ]; then
     echo "
 invalid current directory, commands can be executed only from the demo directory
