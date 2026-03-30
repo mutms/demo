@@ -12,7 +12,7 @@ if [ ! -d "site" ]; then
 fi
 
 if [ ! -d "site/moodle" ]; then
-    git clone -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
+    git clone --depth 1 -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
 fi
 
 if [ ! -f "site/moodle/config.php" ]; then
@@ -28,15 +28,17 @@ if [ ! -d "database" ]; then
 fi
 
 docker-compose up -d
-if ! docker-compose exec webserver test -d /var/www/site; then
-    docker-compose restart
+if ! docker-compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
+    docker-compose restart db
+    docker-compose restart webserver
+    sleep 3
 fi
 
 docker-compose exec webserver bash --login /mdc/composer_install.sh
 
 docker-compose exec webserver php composer.phar install --no-dev --classmap-authoritative
 
-docker-compose exec webserver php admin/cli/install_database.php --fullname="MDL Demo" --shortname="MDL" --summary="Moodle Demo Site" --adminemail="admin@example.com" --adminpass="admin" --agree-license"$@"
+docker-compose exec webserver php admin/cli/install_database.php --fullname="MDL Demo" --shortname="MDL" --summary="Moodle Demo Site" --adminemail="admin@example.com" --adminpass="admin" --agree-license "$@"
 
 echo "
 Your Moodle demo site is now available at http://127.0.0.1:9501/
