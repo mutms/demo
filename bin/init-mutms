@@ -23,6 +23,7 @@ fi
 
 if [ ! -d "dataroot" ]; then
     mkdir dataroot
+    chmod 02777 dataroot
 fi
 
 if [ ! -d "database" ]; then
