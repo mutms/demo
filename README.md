@@ -57,8 +57,3 @@ site/moodle/            Moodle codebase directory (git clone by init script)
 site/moodle/config.php  Moodle configuration file (copy of assets/config.php by init script)
 compose.yml             Docker Compose configuration
 ~~~
-
-## Full package with already installed demo
-
-If you have an already installed demo site with sample data, you can zip the entire `demo` directory and pass it to anybody else.
-If they have Docker or OrbStack they only need to extract it and run `bin/start` — no installation steps required.
