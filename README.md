@@ -14,8 +14,8 @@ Windows is not currently supported. A separate project providing Windows support
 Clone this repository and run the init script:
 
 ~~~bash
-git clone https://github.com/mutms/demo
-cd demo
+git clone https://github.com/mutms/demo mydemo
+cd mydemo
 bin/init
 ~~~
 
