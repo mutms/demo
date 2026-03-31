@@ -26,20 +26,10 @@ if [ ! -f "site/moodle/config.php" ]; then
     cp assets/config.php site/moodle/config.php
 fi
 
-if [ ! -d "dataroot" ]; then
-    mkdir dataroot
-fi
-
-if [ ! -d "database" ]; then
-    mkdir database
-fi
+mkdir -p site dataroot database backups
 
 chmod -R 02777 dataroot
 chmod -R 02777 database
-
-if [ ! -d "backups" ]; then
-    mkdir backups
-fi
 
 cat > .env <<EOF
 DEMO_PORT=$DEMO_PORT
