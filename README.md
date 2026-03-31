@@ -73,8 +73,8 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 |-------------------|--------------------------------------------------------------------------------|
 | `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
 | `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
-| `bin/stop`        | Stop the Docker services — use this when switching to another demo site        |
-| `bin/start`       | Start the Docker services                                                      |
+| `bin/stop`        | Stop the Docker services — use this to stop the demo site                      |
+| `bin/start`       | Start the Docker services — start previously stopped demo site                 |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
 | `bin/down`        | Remove Docker containers and images, all site data is kept                     |
 | `bin/backup`      | Backup entire demo site                                                        |
