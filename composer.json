@@ -10,6 +10,8 @@
   ],
   "license": "GPL-3.0-or-later",
   "keywords": ["moodle", "mutms", "lms"],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
   "support": {
     "issues": "https://github.com/mutms/demo/issues",
     "source": "https://github.com/mutms/demo"
