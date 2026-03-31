@@ -39,11 +39,11 @@ EOF
 
 docker compose down
 docker compose up -d
-if ! docker compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
-    docker compose restart db
-    docker compose restart webserver
-    sleep 3
-fi
+
+echo "Waiting for PostgreSQL..."
+until docker compose exec -T db pg_isready -U moodle > /dev/null 2>&1; do
+    sleep 1
+done
 
 docker compose exec webserver bash --login /mdc/composer_install.sh
 
