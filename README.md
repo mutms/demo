@@ -4,9 +4,10 @@ A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS
 
 ## Requirements
 
-- macOS or Linux - Windows will be supported via WSL later in a separate project.
 - [Docker](https://docs.docker.com/get-docker/) or [OrbStack](https://orbstack.dev/)
 - [Git](https://git-scm.com/)
+
+Windows is not currently supported. A separate project providing Windows support via WSL2 is planned.
 
 ## Quick start
 
@@ -72,7 +73,7 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 | Command           | Description                                                                    |
 |-------------------|--------------------------------------------------------------------------------|
 | `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
-| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                  |
 | `bin/stop`        | Stop the Docker services — use this to stop the demo site                      |
 | `bin/start`       | Start the Docker services — start previously stopped demo site                 |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
