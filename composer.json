@@ -1,0 +1,17 @@
+{
+  "name": "mutms/demo",
+  "type": "project",
+  "description": "Set up local MuTMS or Moodle demo site using Docker",
+  "homepage": "https://github.com/mutms/demo",
+  "authors": [
+    {
+      "name": "Petr Skoda"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "keywords": ["moodle", "mutms", "lms"],
+  "support": {
+    "issues": "https://github.com/mutms/demo/issues",
+    "source": "https://github.com/mutms/demo"
+  }
+}
