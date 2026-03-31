@@ -1,6 +1,6 @@
 <?php  // Moodle configuration file
 
-if (!getenv('DEMO_RUNNING', true)) {
+if (!getenv('DEMO_PORT', true)) {
     die('Not a DEMO container!');
 }
 
@@ -21,7 +21,7 @@ $CFG->dbpass    = 'm@0dl3ing';
 $CFG->prefix    = 'mdl_';
 $CFG->dboptions = [];
 
-$CFG->wwwroot   = 'http://127.0.0.1:9501';
+$CFG->wwwroot   = 'http://127.0.0.1:' . getenv('DEMO_PORT');
 
 $CFG->dataroot  = '/var/www/dataroot';
 $CFG->admin     = 'admin';

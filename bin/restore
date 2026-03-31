@@ -21,14 +21,15 @@ Backup file backups/$1.tgz does not exist
 fi
 
 echo "Purging current Demo site ..."
-bin/destroy
+bin/down
 rm -rf database/
 rm -rf dataroot/
 rm -rf site/
+rm .env
 
 echo "Restoring demo site from backups/$1.tgz ..."
 
-tar -xpzf backups/$1.tgz database dataroot site
+tar -xpzf backups/$1.tgz database dataroot site .env
 
 echo "Starting restored Demo site ..."
 

@@ -13,10 +13,18 @@ DEMO site was not initialised yet, use bin/init
     exit 1
 fi
 
+if [ -f ".env" ]; then
+    source .env
+fi
+
+DEMO_PORT="${DEMO_PORT:-9501}"
+DEMO_SHORTNAME="${DEMO_SHORTNAME:-MuTMS}"
+DEMO_FULLNAME="${DEMO_FULLNAME:-$DEMO_SHORTNAME}"
+
 docker compose up -d
 
 docker compose exec db bash /mdc/mdc-wait.sh
 
 echo "
-Your $FULLNAME site is now available at http://127.0.0.1:9501/
+Your '${DEMO_FULLNAME}' site is now available at http://127.0.0.1:${DEMO_PORT}/
 "

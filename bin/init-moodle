@@ -10,7 +10,12 @@ if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
 fi
 
-FULLNAME="${1:-Moodle Demo}"
-SHORTNAME="${2:-Moodle}"
+if [ -f ".env" ]; then
+    source .env
+fi
 
-exec bin/init "$FULLNAME" "$SHORTNAME"
+DEMO_PORT="${1:-${DEMO_PORT:-9501}}"
+DEMO_SHORTNAME="${2:-${DEMO_SHORTNAME:-Moodle}}"
+DEMO_FULLNAME="${3:-${DEMO_FULLNAME:-$DEMO_SHORTNAME}}"
+
+exec bin/init "$DEMO_PORT" "$DEMO_SHORTNAME" "$DEMO_FULLNAME"

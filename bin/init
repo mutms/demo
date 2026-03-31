@@ -6,8 +6,13 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
-FULLNAME="${1:-MuTMS Demo}"
-SHORTNAME="${2:-MuTMS}"
+if [ -f ".env" ]; then
+    source .env
+fi
+
+DEMO_PORT="${1:-${DEMO_PORT:-9501}}"
+DEMO_SHORTNAME="${2:-${DEMO_SHORTNAME:-MuTMS}}"
+DEMO_FULLNAME="${3:-${DEMO_FULLNAME:-$DEMO_SHORTNAME}}"
 
 if [ ! -d "site" ]; then
     mkdir site
@@ -34,6 +39,13 @@ if [ ! -d "backups" ]; then
     mkdir backups
 fi
 
+cat > .env <<EOF
+DEMO_PORT=$DEMO_PORT
+DEMO_SHORTNAME=$DEMO_SHORTNAME
+DEMO_FULLNAME=$DEMO_FULLNAME
+EOF
+
+docker compose down
 docker compose up -d
 if ! docker compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
     docker compose restart db
@@ -46,15 +58,15 @@ docker compose exec webserver bash --login /mdc/composer_install.sh
 docker compose exec webserver php composer.phar install --no-dev --classmap-authoritative
 
 docker compose exec webserver php admin/cli/install_database.php \
-    --fullname="$FULLNAME" \
-    --shortname="$SHORTNAME" \
-    --summary="$FULLNAME" \
+    --fullname="$DEMO_FULLNAME" \
+    --shortname="$DEMO_SHORTNAME" \
+    --summary="$DEMO_FULLNAME" \
     --adminemail="admin@example.com" \
     --adminpass="admin" \
     --agree-license
 
 echo "
-Your Demo site is now available at http://127.0.0.1:9501/
+Your Demo site '${DEMO_FULLNAME}' is now available at http://127.0.0.1:${DEMO_PORT}/
   username is 'admin'
   password is 'admin'
 "

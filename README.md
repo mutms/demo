@@ -18,9 +18,23 @@ cd demo
 bin/init
 ~~~
 
+The script accepts optional parameters to configure the demo site:
+
+~~~bash
+bin/init [port] [shortname] [fullname]
+~~~
+
+For example:
+
+~~~bash
+bin/init 9502 acme "Acme Corporation"
+~~~
+
+If `fullname` is not provided, `shortname` is used instead. Parameters default to `9501`, `MuTMS`, and `MuTMS` respectively. The values are saved to `.env` and reused on subsequent runs.
+
 The script will:
 
-- create the `site/`, `dataroot/`, and `database/` directories
+- create the `site/`, `dataroot/`, `database/`, and `backups/` directories
 - clone the MuTMS distribution based on the latest Moodle 5.1.x into `site/moodle/`
 - add basic Moodle `config.php`
 - start the Docker services
@@ -49,7 +63,7 @@ To restore a backup:
 bin/restore mybackup
 ~~~
 
-This stops and removes the current site, restores the backup, and starts the site again.
+This stops and removes the current site, restores the backup, and starts the site again using the original port. The port is preserved intentionally — Moodle stores the site URL in the database, so changing it would break internal links.
 
 To transfer a demo site to another computer, copy the `backups/` directory or individual `.tgz` files to the target machine, place them in the `backups/` directory of the demo checkout there, and run `bin/restore`.
 
@@ -58,25 +72,26 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 | Command           | Description                                                                    |
 |-------------------|--------------------------------------------------------------------------------|
 | `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
-| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                  |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
 | `bin/stop`        | Stop the Docker services — use this when switching to another demo site        |
 | `bin/start`       | Start the Docker services                                                      |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
-| `bin/destroy`     | Remove Docker containers and images                                            |
+| `bin/down`        | Remove Docker containers and images, all site data is kept                     |
 | `bin/backup`      | Backup entire demo site                                                        |
 | `bin/restore`     | Restore demo site backup                                                       |
 
-`bin/destroy` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
+`bin/down` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
 
 ## Directory layout
 
 ~~~
+.env                    local configuration: port, shortname, fullname (created by init script)
 assets/                 configuration files and helper scripts
-bin/                    management commands
 backups/                demo site backups (created by bin/backup or uploaded manually)
+compose.yml             Docker Compose configuration
+bin/                    management commands
 database/               PostgreSQL data (created by init script)
 dataroot/               Moodle data directory (created by init script)
 site/moodle/            Moodle codebase directory (git clone by init script)
 site/moodle/config.php  Moodle configuration file (copy of assets/config.php by init script)
-compose.yml             Docker Compose configuration
 ~~~

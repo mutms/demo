@@ -33,7 +33,7 @@ services:
         required: true
     environment:
       COMPOSER_ALLOW_SUPERUSER: "1"
-      DEMO_RUNNING: "1"
+      DEMO_PORT: ${DEMO_PORT:-9501}
     working_dir: /var/www/site/moodle
     image: mutms/mdc-php-apache:8.3
     networks:
@@ -61,4 +61,4 @@ services:
         bind:
           create_host_path: true
     ports:
-      - "127.0.0.1:9501:80"
+      - "127.0.0.1:${DEMO_PORT:-9501}:80"
