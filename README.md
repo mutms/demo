@@ -4,12 +4,13 @@ A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS
 
 ## Requirements
 
-- macOS or Linux - Windows is not currently supported, contributions welcome.
+- macOS or Linux - Windows will be supported via WSL later in a separate project.
 - [Docker](https://docs.docker.com/get-docker/) or [OrbStack](https://orbstack.dev/)
+- [Git](https://git-scm.com/)
 
-## Quick start with Git
+## Quick start
 
-If you have [Git](https://git-scm.com/) installed then clone this repository and run the init script:
+Clone this repository and run the init script:
 
 ~~~bash
 git clone https://github.com/mutms/demo
@@ -31,24 +32,6 @@ Once complete, the site is available at **http://127.0.0.1:9501/**
 **Admin credentials:** `admin` / `admin`
 
 > **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init-mutms`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
-
-## Manual installation without Git
-
-If you do not have git binary then you can:
-
-1. download this package from the [releases page](https://github.com/mutms/demo/releases)
-2. extract demo package into `demo` directory
-3. download [MuTMS 5.1 release package](https://github.com/mutms/mutms/releases) or [Moodle 5.1 release package](https://download.moodle.org/releases/latest/)
-4. extract release package into `demo/site/moodle` directory
-5. open Command line shell, go to `demo` directory, and run `bin/init-mutms` or `bin/init-moodle` command
-
-Once complete, the site is available at **http://127.0.0.1:9501/**
-
-**Admin credentials:** `admin` / `admin`
-
-## Installing additional plugins
-
-Additional plugins can be installed from the [Moodle Plugins Database](https://moodle.org/plugins/) via **http://127.0.0.1:9501/admin/tool/installaddon/index.php**, the same way as on any standard Moodle site.
 
 ## Commands
 
