@@ -31,6 +31,13 @@ Backup already exists, use a different name
     exit 1
 fi
 
+RUNNING=$(docker compose ps --status running --quiet 2>/dev/null)
+
+if [ -n "$RUNNING" ]; then
+    echo "Stopping Docker services ..."
+    docker compose stop
+fi
+
 echo "Backing up Demo site into backups/$1.tgz ..."
 
 tar -zcpf backups/$1.tgz database dataroot site .env
@@ -39,3 +46,7 @@ echo ""
 ls -la backups/$1.tgz
 echo ""
 
+if [ -n "$RUNNING" ]; then
+    echo "Restarting Docker services ..."
+    exec bin/start
+fi
