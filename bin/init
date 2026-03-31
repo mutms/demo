@@ -30,6 +30,10 @@ if [ ! -d "database" ]; then
     mkdir database
 fi
 
+if [ ! -d "backups" ]; then
+    mkdir backups
+fi
+
 docker compose up -d
 if ! docker compose exec -T webserver ls /var/www/site/moodle/ > /dev/null 2>&1; then
     docker compose restart db
@@ -50,7 +54,7 @@ docker compose exec webserver php admin/cli/install_database.php \
     --agree-license
 
 echo "
-Your $FULLNAME site is now available at http://127.0.0.1:9501/
+Your Demo site is now available at http://127.0.0.1:9501/
   username is 'admin'
   password is 'admin'
 "

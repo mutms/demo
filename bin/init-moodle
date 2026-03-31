@@ -13,4 +13,4 @@ fi
 FULLNAME="${1:-Moodle Demo}"
 SHORTNAME="${2:-Moodle}"
 
-exec bin/init-mutms "$FULLNAME" "$SHORTNAME"
+exec bin/init "$FULLNAME" "$SHORTNAME"

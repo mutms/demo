@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# First find out if this was called from symlink,
+# then find the real path of parent directory.
+# This is needed because macOS does not have GNU realpath.
+thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
+cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
+
+if [ ! -f "database/postgresql.conf" ]; then
+    echo "
+DEMO site was not initialised yet
+"
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    echo "
+Backup name is required
+"
+    exit 1
+fi
+
+if [ ! -d "backups" ]; then
+    mkdir backups
+fi
+
+if [ -f "backups/$1.tgz" ]; then
+    echo "
+Backup already exists, use a different name
+"
+    exit 1
+fi
+
+echo "Backing up Demo site into backups/$1.tgz ..."
+
+tar -zcpf backups/$1.tgz database dataroot site
+
+echo ""
+ls -la backups/$1.tgz
+echo ""
+

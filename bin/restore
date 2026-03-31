@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# First find out if this was called from symlink,
+# then find the real path of parent directory.
+# This is needed because macOS does not have GNU realpath.
+thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
+cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
+
+if [ -z "$1" ]; then
+    echo "
+Backup name is required
+"
+    exit 1
+fi
+
+if [ ! -f "backups/$1.tgz" ]; then
+    echo "
+Backup file backups/$1.tgz does not exist
+"
+    exit 1
+fi
+
+echo "Purging current Demo site ..."
+bin/destroy
+rm -rf database/
+rm -rf dataroot/
+rm -rf site/
+
+echo "Restoring demo site from backups/$1.tgz ..."
+
+tar -xpzf backups/$1.tgz database dataroot site
+
+echo "Starting restored Demo site ..."
+
+exec bin/init
