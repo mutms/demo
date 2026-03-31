@@ -4,8 +4,8 @@ A self-contained local demo of [MuTMS](https://github.com/mutms/mutms/tree/MuTMS
 
 ## Requirements
 
-- [Docker](https://docs.docker.com/get-docker/) or [OrbStack](https://orbstack.dev/)
-- [Git](https://git-scm.com/)
+- [Docker Engine](https://docs.docker.com/engine/install/) or [OrbStack](https://orbstack.dev/) — Docker Desktop is not required.
+- [Git](https://git-scm.com/) — pre-installed on macOS and most Linux distributions.
 
 Windows is not currently supported. A separate project providing Windows support via WSL2 is planned.
 
