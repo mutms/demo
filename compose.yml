@@ -62,7 +62,3 @@ services:
           create_host_path: true
     ports:
       - "127.0.0.1:9501:80"
-
-networks:
-  default:
-    name: demo_default
