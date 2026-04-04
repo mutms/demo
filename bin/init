@@ -25,12 +25,6 @@ if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MuTMS_51 https://github.com/mutms/mutms.git site/moodle
 fi
 
-# If Moodle is a git clone, fix Git safe.directory inside the container
-if [ -d site/moodle/.git ]; then
-    echo "Configuring git safe.directory inside container..."
-    docker compose exec webserver git config --global --add safe.directory /var/www/site/moodle
-fi
-
 if [ ! -f "site/moodle/config.php" ]; then
     cp assets/config.php site/moodle/config.php
 fi
@@ -53,6 +47,12 @@ docker compose down
 docker compose up -d
 
 docker compose exec db bash /mdc/mdc-wait.sh
+
+# If Moodle is a git clone, fix Git safe.directory inside the container
+if [ -d site/moodle/.git ]; then
+    echo "Configuring git safe.directory inside container..."
+    docker compose exec webserver git config --global --add safe.directory /var/www/site/moodle
+fi
 
 docker compose exec webserver bash --login /mdc/composer_install.sh
 
