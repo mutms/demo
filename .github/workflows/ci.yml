@@ -112,6 +112,7 @@ jobs:
 
       - name: Remove dataroot, database, site
         run: |
+          sudo chmod -R u+rwX dataroot database site || true
           rm -rf dataroot
           rm -rf database
           rm -rf site
