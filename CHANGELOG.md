@@ -4,13 +4,13 @@ Plugin versioning is following semantic versioning standard.
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
-## [v1.5](https://github.com/mutms/demo/compare/v1.5...v1.4) - 2026-04-04
+## [v1.5](https://github.com/mutms/demo/compare/v1.4...v1.5) - 2026-04-04
 
 ### Fixed
 
 - Fixed custom ports
 
-## [v1.4](https://github.com/mutms/demo/compare/v1.4...v1.3) - 2026-04-04
+## [v1.4](https://github.com/mutms/demo/compare/v1.3...v1.4) - 2026-04-04
 
 ### Fixed
 
