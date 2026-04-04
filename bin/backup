@@ -45,6 +45,9 @@ echo "Backing up Demo site into backups/$1.tgz ..."
 
 tar -zcpf backups/$1.tgz database dataroot site demo.env
 
+# Fix ownership so user can delete/overwrite backups without sudo
+sudo chown "$USER":"$USER" "backups/$1.tgz"
+
 echo ""
 ls -la backups/$1.tgz
 echo ""

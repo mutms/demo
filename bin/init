@@ -40,6 +40,9 @@ DEMO_SHORTNAME=$DEMO_SHORTNAME
 DEMO_FULLNAME=$DEMO_FULLNAME
 EOF
 
+# Ensure demo.env is owned by the user, not root
+sudo chown "$USER":"$USER" demo.env
+
 docker compose down
 docker compose up -d
 
