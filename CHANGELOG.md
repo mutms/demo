@@ -26,3 +26,37 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 
 - Added changelog file
+
+## [v1.3](https://github.com/mutms/demo/compare/v1.2...v1.3) - 2026-03-31
+
+# Added
+
+- Added validation of restored .env files
+
+# Fixed
+
+- Prevented problems with permissions after restore
+- Other bug fixes
+
+## [v1.2](https://github.com/mutms/demo/compare/v1.1...v1.2) - 2026-03-31
+
+# Added
+
+- Added bin/backup and bin/restore script
+- Localhost port and site names are now configurable
+
+### Fixed
+
+- Multiple bug fixes
+
+## [v1.1](https://github.com/mutms/demo/compare/v1.0...v1.1) - 2026-03-30
+
+### Changed
+
+- General improvements and polishing
+
+## v1.0 - 2026-03-30
+
+### Added
+
+- Initial release
