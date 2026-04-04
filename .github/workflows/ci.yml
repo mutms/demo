@@ -84,3 +84,64 @@ jobs:
 
       - name: Stop containers
         run: docker compose down
+
+
+  # ---------------------------------------------------------
+  # 3) Test bin/restore using backup created from bin/init
+  # ---------------------------------------------------------
+  test-restore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run bin/init (port 9503)
+        run: ./bin/init 9503
+
+      - name: Run bin/backup mybackup
+        run: ./bin/backup mybackup
+
+      - name: Verify backup file exists
+        run: |
+          if [ ! -f backups/mybackup.tgz ]; then
+            echo "Backup file backups/mybackup.tgz missing"
+            ls -R backups
+            exit 1
+          fi
+
+      - name: Remove dataroot, database, site
+        run: |
+          rm -rf dataroot
+          rm -rf database
+          rm -rf site
+          rm -f demo.env
+
+      - name: Run bin/restore mybackup
+        run: ./bin/restore mybackup
+
+      - name: Verify Moodle MUC configuration exists after restore
+        run: |
+          if [ ! -f dataroot/muc/config.php ]; then
+            echo "MUC config missing — restore did not recreate Moodle properly"
+            ls -R dataroot
+            exit 1
+          fi
+
+      - name: Verify restored homepage contains correct site name
+        run: |
+          for i in {1..10}; do
+            HTML=$(curl -s http://127.0.0.1:9503/ || true)
+            if echo "$HTML" | grep -qi "MuTMS"; then
+              echo "Restored homepage OK"
+              exit 0
+            fi
+            echo "Waiting for webserver..."
+            sleep 2
+          done
+
+          echo "Restored homepage does not contain expected site name 'MuTMS'"
+          exit 1
+
+      - name: Stop containers
+        run: docker compose down
