@@ -20,8 +20,17 @@ Backup name is required
     exit 1
 fi
 
+# Determine the real user even if script is run with sudo
+if [ -n "$SUDO_USER" ]; then
+    REALUSER="$SUDO_USER"
+else
+    REALUSER="$USER"
+fi
+REALGROUP=$(id -gn "$REALUSER")
+
 if [ ! -d "backups" ]; then
     mkdir backups
+    chown "$REALUSER":"$REALGROUP" backups
 fi
 
 if [ -f "backups/$1.tgz" ]; then
@@ -46,7 +55,7 @@ echo "Backing up Demo site into backups/$1.tgz ..."
 tar -zcpf backups/$1.tgz database dataroot site demo.env
 
 # Fix ownership so user can delete/overwrite backups without sudo
-sudo chown "$USER":"$USER" "backups/$1.tgz"
+chown "$REALUSER":"$REALGROUP" "backups/$1.tgz"
 
 echo ""
 ls -la backups/$1.tgz

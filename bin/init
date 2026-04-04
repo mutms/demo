@@ -17,9 +17,32 @@ DEMO_FULLNAME="${3:-${DEMO_FULLNAME:-$DEMO_SHORTNAME}}"
 # Export port, because it is used from compose.yml file.
 export DEMO_PORT
 
-if [ ! -d "site" ]; then
-    mkdir site
+cat > demo.env <<EOF
+DEMO_PORT=$DEMO_PORT
+DEMO_SHORTNAME=$DEMO_SHORTNAME
+DEMO_FULLNAME=$DEMO_FULLNAME
+EOF
+
+# Check if any services are running before calling down
+RUNNING=$(docker compose ps --status running --quiet 2>/dev/null)
+
+if [ -n "$RUNNING" ]; then
+    echo "Stopping existing Docker services..."
+    docker compose down
 fi
+
+mkdir -p site dataroot database backups
+
+# Determine the real user even if script is run with sudo
+if [ -n "$SUDO_USER" ]; then
+    REALUSER="$SUDO_USER"
+else
+    REALUSER="$USER"
+fi
+REALGROUP=$(id -gn "$REALUSER")
+
+# Ensure directories are owned by the user (in case restore was run with sudo)
+chown -R "$REALUSER":"$REALGROUP" site dataroot database backups demo.env
 
 if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MuTMS_51 https://github.com/mutms/mutms.git site/moodle
@@ -29,21 +52,9 @@ if [ ! -f "site/moodle/config.php" ]; then
     cp assets/config.php site/moodle/config.php
 fi
 
-mkdir -p site dataroot database backups
-
 find dataroot database site -type d -exec chmod 2777 {} +
 find dataroot database site -type f -exec chmod 0666 {} +
 
-cat > demo.env <<EOF
-DEMO_PORT=$DEMO_PORT
-DEMO_SHORTNAME=$DEMO_SHORTNAME
-DEMO_FULLNAME=$DEMO_FULLNAME
-EOF
-
-# Ensure demo.env is owned by the user, not root
-sudo chown "$USER":"$USER" demo.env
-
-docker compose down
 docker compose up -d
 
 docker compose exec db bash /mdc/mdc-wait.sh
