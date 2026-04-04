@@ -4,7 +4,7 @@ Plugin versioning is following semantic versioning standard.
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
-## [Unreleased](https://github.com/mutms/demo/compare/v1.6...main) - 2026-04-xx
+## [v1.70](https://github.com/mutms/demo/compare/v1.6...v1.70) - 2026-04-04
 
 ### Fixed
 
