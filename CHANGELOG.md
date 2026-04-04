@@ -13,6 +13,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Fixed
 
 - Fixed changelog diff links and added all previous releases
+- Fixed git permissions issue in containers
 
 ## [v1.5](https://github.com/mutms/demo/compare/v1.4...v1.5) - 2026-04-04
 
