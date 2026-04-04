@@ -6,6 +6,38 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
+# --- OrbStack detection -------------------------------------------------------
+
+is_orbstack() {
+    # Host-side detection: OrbStack app exists
+    if [ -x /Applications/OrbStack.app/Contents/MacOS/orbstack ]; then
+        return 0
+    fi
+
+    # Docker engine reports OrbStack
+    if docker info 2>/dev/null | grep -q "Orbstack"; then
+        return 0
+    fi
+
+    return 1
+}
+
+# --- Enforce sudo unless OrbStack is detected --------------------------------
+
+if ! is_orbstack && [ -z "$SUDO_USER" ]; then
+    echo "
+ERROR: Backup must be run with sudo unless you are using OrbStack.
+
+Examples:
+  sudo bin/backup mybackup
+  bin/backup mybackup     # only works on OrbStack
+
+"
+    exit 1
+fi
+
+# --- Validate environment -----------------------------------------------------
+
 if [ ! -f "dataroot/muc/config.php" ]; then
     echo "
 DEMO site was not initialised yet
@@ -61,7 +93,14 @@ echo ""
 ls -la backups/$1.tgz
 echo ""
 
-if [ -n "$RUNNING" ]; then
-    echo "Restarting Docker services ..."
+# --- Drop sudo privileges before restarting ----------------------------------
+
+echo ""
+echo "Restarting Demo site ..."
+
+if [ -n "$SUDO_USER" ]; then
+    # Drop SUDO_USER so bin/init does not complain
+    exec sudo -u "$REALUSER" env -u SUDO_USER bin/start
+else
     exec bin/start
 fi
