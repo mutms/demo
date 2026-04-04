@@ -9,6 +9,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 
 - Added GitHub CI tests
+- Added bin/backup and bin/restore compatible with sudo - necessary for Linux compatibility
+
+### Changed
+
+- Switch from PostgreSQL to MariaDB to simplify backup/restore
 
 ### Fixed
 
