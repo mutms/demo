@@ -10,8 +10,8 @@ if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MOODLE_501_STABLE https://github.com/moodle/moodle.git site/moodle
 fi
 
-if [ -f ".env" ]; then
-    source .env
+if [ -f "demo.env" ]; then
+    source demo.env
 fi
 
 DEMO_PORT="${1:-${DEMO_PORT:-9501}}"

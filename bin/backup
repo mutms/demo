@@ -40,7 +40,7 @@ fi
 
 echo "Backing up Demo site into backups/$1.tgz ..."
 
-tar -zcpf backups/$1.tgz database dataroot site .env
+tar -zcpf backups/$1.tgz database dataroot site demo.env
 
 echo ""
 ls -la backups/$1.tgz

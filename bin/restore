@@ -25,22 +25,22 @@ bin/down
 rm -rf database/
 rm -rf dataroot/
 rm -rf site/
-rm -f .env
+rm -f demo.env
 
 echo "Restoring demo site from backups/$1.tgz ..."
 
-tar -xpzf backups/$1.tgz database dataroot site .env
+tar -xpzf backups/$1.tgz database dataroot site demo.env
 
-# Extract only a valid DEMO_PORT from the restored .env
+# Extract only a valid DEMO_PORT from the restored demo.env
 DEMO_PORT=9501
-if [ -f .env ]; then
-    port=$(grep -E '^DEMO_PORT=[0-9]+$' .env | cut -d= -f2 | tr -d '\r')
+if [ -f demo.env ]; then
+    port=$(grep -E '^DEMO_PORT=[0-9]+$' demo.env | cut -d= -f2 | tr -d '\r')
     if [ -n "$port" ] && [ "$port" -gt 1023 ]; then
         DEMO_PORT=$port
     fi
 fi
 
-cat > .env <<EOF
+cat > demo.env <<EOF
 DEMO_PORT=$DEMO_PORT
 DEMO_SHORTNAME=$1
 DEMO_FULLNAME=$1

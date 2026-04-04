@@ -13,8 +13,8 @@ DEMO site was not initialised yet, use bin/init
     exit 1
 fi
 
-if [ -f ".env" ]; then
-    source .env
+if [ -f "demo.env" ]; then
+    source demo.env
 fi
 
 DEMO_PORT="${DEMO_PORT:-9501}"

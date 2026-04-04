@@ -1,8 +1,9 @@
 .DS_Store
 /.idea/
-
 .env
+
 /backups
 /database
 /dataroot
 /site
+demo.env

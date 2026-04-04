@@ -6,8 +6,8 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
-if [ -f ".env" ]; then
-    source .env
+if [ -f "demo.env" ]; then
+    source demo.env
 fi
 
 DEMO_PORT="${1:-${DEMO_PORT:-9501}}"
@@ -31,7 +31,7 @@ mkdir -p site dataroot database backups
 chmod -R 02777 dataroot
 chmod -R 02777 database
 
-cat > .env <<EOF
+cat > demo.env <<EOF
 DEMO_PORT=$DEMO_PORT
 DEMO_SHORTNAME=$DEMO_SHORTNAME
 DEMO_FULLNAME=$DEMO_FULLNAME

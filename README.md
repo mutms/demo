@@ -86,7 +86,7 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 ## Directory layout
 
 ~~~
-.env                    local configuration: port, shortname, fullname (created by init script)
+demo.env                local configuration: port, shortname, fullname (created by init script)
 assets/                 configuration files and helper scripts
 backups/                demo site backups (created by bin/backup or uploaded manually)
 compose.yml             Docker Compose configuration
