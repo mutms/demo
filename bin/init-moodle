@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [ -n "$SUDO_USER" ]; then
+    echo "
+Do not use sudo with bin/init-moodle
+"
+    exit 1
+fi
+
 # First find out if this was called from symlink,
 # then find the real path of parent directory.
 # This is needed because macOS does not have GNU realpath.
