@@ -27,11 +27,20 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Moodle responds over HTTP with correct site name
+      - name: Verify homepage contains correct site name (MuTMS)
         run: |
-          sleep 5
-          curl -sSf http://127.0.0.1:9501/ | grep -qi "MuTMS" \
-            || (echo "Homepage does not contain expected site name 'MuTMS'" && exit 1)
+          for i in {1..10}; do
+            HTML=$(curl -s http://127.0.0.1:9501/ || true)
+            if echo "$HTML" | grep -qi "MuTMS"; then
+              echo "Homepage OK"
+              exit 0
+            fi
+            echo "Waiting for webserver..."
+            sleep 2
+          done
+
+          echo "Homepage does not contain expected site name 'MuTMS'"
+          exit 1
 
       - name: Stop containers
         run: docker compose down
@@ -58,11 +67,20 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Moodle responds over HTTP with correct site name
+      - name: Verify homepage contains correct site name (CI Demo 2)
         run: |
-          sleep 5
-          curl -sSf http://127.0.0.1:9502/ | grep -qi "CI Demo 2" \
-            || (echo "Homepage does not contain expected site name 'CI Demo 2'" && exit 1)
+          for i in {1..10}; do
+            HTML=$(curl -s http://127.0.0.1:9502/ || true)
+            if echo "$HTML" | grep -qi "CI Demo 2"; then
+              echo "Homepage OK"
+              exit 0
+            fi
+            echo "Waiting for webserver..."
+            sleep 2
+          done
+
+          echo "Homepage does not contain expected site name 'CI Demo 2'"
+          exit 1
 
       - name: Stop containers
         run: docker compose down
