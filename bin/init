@@ -31,11 +31,8 @@ fi
 
 mkdir -p site dataroot database backups
 
-find dataroot database -type d -exec chmod 2777 {} +
-find dataroot database -type f -exec chmod 0666 {} +
-
-find dataroot database -type d -exec chmod 2777 {} +
-find dataroot database -type f -exec chmod 0666 {} +
+find dataroot database site -type d -exec chmod 2777 {} +
+find dataroot database site -type f -exec chmod 0666 {} +
 
 cat > demo.env <<EOF
 DEMO_PORT=$DEMO_PORT
