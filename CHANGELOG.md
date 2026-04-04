@@ -9,6 +9,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Fixed
 
 - Renamed `.env` file to `demo.env` to prevent unintended exposure of sensitive information via backup files
+- Fixed permissions to not set files as executable in /dataroot/ and /database/ directories
 
 ### Added
 
