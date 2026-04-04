@@ -6,6 +6,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased](https://github.com/mutms/demo/compare/v1.5...main) - 2026-04-xx
 
+### Added
+
+- Added GitHub CI tests
+
 ### Fixed
 
 - Fixed changelog diff links and added all previous releases

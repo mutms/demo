@@ -1,0 +1,68 @@
+name: Demo CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  # ---------------------------------------------------------
+  # 1) Test bin/init with default settings (port 9501)
+  # ---------------------------------------------------------
+  test-init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run bin/init (default settings)
+        run: ./bin/init
+
+      - name: Verify Moodle MUC configuration exists (installer ran)
+        run: |
+          if [ ! -f dataroot/muc/config.php ]; then
+            echo "MUC config missing — Moodle installer did not run"
+            ls -R dataroot
+            exit 1
+          fi
+
+      - name: Verify Moodle responds over HTTP with correct site name
+        run: |
+          sleep 5
+          curl -sSf http://127.0.0.1:9501/ | grep -qi "MuTMS" \
+            || (echo "Homepage does not contain expected site name 'MuTMS'" && exit 1)
+
+      - name: Stop containers
+        run: docker compose down
+
+
+  # ---------------------------------------------------------
+  # 2) Test bin/init-moodle with custom settings (port 9502)
+  # ---------------------------------------------------------
+  test-init-moodle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run bin/init-moodle with custom settings
+        run: ./bin/init-moodle --port=9502 --shortname="CI2" --fullname="CI Demo 2"
+
+      - name: Verify Moodle MUC configuration exists (installer ran)
+        run: |
+          if [ ! -f dataroot/muc/config.php ]; then
+            echo "MUC config missing — Moodle installer did not run"
+            ls -R dataroot
+            exit 1
+          fi
+
+      - name: Verify Moodle responds over HTTP with correct site name
+        run: |
+          sleep 5
+          curl -sSf http://127.0.0.1:9502/ | grep -qi "CI Demo 2" \
+            || (echo "Homepage does not contain expected site name 'CI Demo 2'" && exit 1)
+
+      - name: Stop containers
+        run: docker compose down
