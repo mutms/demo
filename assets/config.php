@@ -12,7 +12,7 @@ ini_set('error_log', '/var/www/php_error.log');
 ini_set('log_errors', '1');
 ini_set('zend.exception_ignore_args', true);
 
-$CFG->dbtype    = 'pgsql';
+$CFG->dbtype    = 'mariadb';
 $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'db';
 $CFG->dbname    = 'moodle';
