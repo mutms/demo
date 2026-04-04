@@ -73,13 +73,13 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 | Command           | Description                                                                    |
 |-------------------|--------------------------------------------------------------------------------|
 | `bin/init`        | First-time setup of MuTMS: clone, configure, and install                       |
-| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                  |
+| `bin/init-moodle` | Clones vanilla Moodle 5.1.x instead of MuTMS                                   |
 | `bin/stop`        | Stop the Docker services — use this to stop the demo site                      |
 | `bin/start`       | Start the Docker services — start previously stopped demo site                 |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
 | `bin/down`        | Remove Docker containers and images, all site data is kept                     |
-| `bin/backup`      | Backup entire demo site                                                        |
-| `bin/restore`     | Restore demo site backup                                                       |
+| `bin/backup`      | Backup entire demo site - use with sudo on Linux                               |
+| `bin/restore`     | Restore demo site backup - use with sudo on Linux                              |
 
 `bin/down` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
 
