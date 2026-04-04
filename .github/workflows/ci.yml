@@ -110,13 +110,11 @@ jobs:
             exit 1
           fi
 
+      - name: Stop containers before cleanup
+        run: ./bin/stop
+
       - name: Remove dataroot, database, site
-        run: |
-          sudo chmod -R u+rwX dataroot database site || true
-          rm -rf dataroot
-          rm -rf database
-          rm -rf site
-          rm -f demo.env
+        run: sudo rm -rf dataroot database site demo.env
 
       - name: Run bin/restore mybackup
         run: ./bin/restore mybackup
