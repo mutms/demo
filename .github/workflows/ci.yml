@@ -19,9 +19,6 @@ jobs:
       - name: Run bin/init (default settings)
         run: ./bin/init
 
-      - name: Fix Git dubious ownership inside container
-        run: docker compose exec webserver git config --global --add safe.directory /var/www/site/moodle
-
       - name: Verify Moodle MUC configuration exists (installer ran)
         run: |
           if [ ! -f dataroot/muc/config.php ]; then
@@ -52,9 +49,6 @@ jobs:
 
       - name: Run bin/init-moodle with custom settings
         run: ./bin/init-moodle 9502 "CI2" "CI Demo 2"
-
-      - name: Fix Git dubious ownership inside container
-        run: docker compose exec webserver git config --global --add safe.directory /var/www/site/moodle
 
       - name: Verify Moodle MUC configuration exists (installer ran)
         run: |
