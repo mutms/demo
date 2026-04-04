@@ -100,7 +100,7 @@ jobs:
         run: ./bin/init 9503
 
       - name: Run bin/backup mybackup
-        run: ./bin/backup mybackup
+        run: sudo ./bin/backup mybackup
 
       - name: Verify backup file exists
         run: |
@@ -114,7 +114,7 @@ jobs:
         run: sudo rm -rf dataroot database site demo.env
 
       - name: Run bin/restore mybackup
-        run: ./bin/restore mybackup
+        run: sudo ./bin/restore mybackup
 
       - name: Verify Moodle MUC configuration exists after restore
         run: |
