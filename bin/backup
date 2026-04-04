@@ -6,7 +6,7 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
-if [ ! -f "database/postgresql.conf" ]; then
+if [ ! -f "database/PG_VERSION" ]; then
     echo "
 DEMO site was not initialised yet
 "
