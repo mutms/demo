@@ -38,6 +38,9 @@ if [ -n "$RUNNING" ]; then
     docker compose stop
 fi
 
+echo "Fixing permissions before backup ..."
+chmod -R u+rwX database dataroot site
+
 echo "Backing up Demo site into backups/$1.tgz ..."
 
 tar -zcpf backups/$1.tgz database dataroot site demo.env
