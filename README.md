@@ -40,33 +40,64 @@ The script will:
 - add basic Moodle `config.php`
 - start the Docker services
 - install Composer dependencies
-- initialise the Moodle database
+- initialise the Moodle database using **MariaDB**
+- configure the site URL and admin account
 
 Once complete, the site is available at **http://127.0.0.1:9501/**
 
 **Admin credentials:** `admin` / `admin`
 
-> **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init`. You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
+> **Tip:** To set up a vanilla Moodle 5.1.x site instead, run `bin/init-moodle` in place of `bin/init`.  
+> You can also place any other Moodle 5.1.x codebase in `site/moodle/` manually before running either init command.
 
 ## Backup and restore
 
-To back up the current demo site:
+### Sudo requirements
+
+- **OrbStack users:** `bin/backup` and `bin/restore` can be run **without sudo**.  
+  OrbStack runs Docker in a user-owned environment, so elevated privileges are not required.
+
+- **Docker Engine users (Linux, macOS without OrbStack):**  
+  `bin/backup` and `bin/restore` **must be run with sudo** because they access directories owned by root and manipulate Docker volumes directly.
+
+If you run without sudo on a non-OrbStack system, the script will stop with a clear error message.
+
+### Backup
 
 ~~~bash
-bin/backup mybackup
+sudo bin/backup mybackup
 ~~~
 
-This creates `backups/mybackup.tgz` containing the database, dataroot, and Moodle codebase.
+This creates `backups/mybackup.tgz` containing:
 
-To restore a backup:
+- the MariaDB database dump
+- the Moodle dataroot
+- the Moodle or MuTMS codebase
+- the `demo.env` configuration file
+
+### Restore
 
 ~~~bash
-bin/restore mybackup
+sudo bin/restore mybackup
 ~~~
 
-This stops and removes the current site, restores the backup, and starts the site again using the original port. The port is preserved intentionally — Moodle stores the site URL in the database, so changing it would break internal links.
+This will:
 
-To transfer a demo site to another computer, copy the `backups/` directory or individual `.tgz` files to the target machine, place them in the `backups/` directory of the demo checkout there, and run `bin/restore`.
+- stop and remove the current demo site
+- delete the existing `site/`, `dataroot/`, `database/`, and `demo.env`
+- extract the backup
+- restore the original port from the backup
+- start the site again using MariaDB
+
+The port is preserved intentionally because Moodle stores the site URL in the database.
+
+### Moving a demo to another machine
+
+Copy the `.tgz` file(s) into the `backups/` directory on the target machine and run:
+
+~~~bash
+sudo bin/restore mybackup
+~~~
 
 ## Commands
 
@@ -78,10 +109,11 @@ To transfer a demo site to another computer, copy the `backups/` directory or in
 | `bin/start`       | Start the Docker services — start previously stopped demo site                 |
 | `bin/update`      | Upgrade to the latest minor release (usable only if codebase obtained via git) |
 | `bin/down`        | Remove Docker containers and images, all site data is kept                     |
-| `bin/backup`      | Backup entire demo site - use with sudo on Linux                               |
-| `bin/restore`     | Restore demo site backup - use with sudo on Linux                              |
+| `bin/backup`      | Backup entire demo site — requires sudo unless using OrbStack                  |
+| `bin/restore`     | Restore demo site backup — requires sudo unless using OrbStack                 |
 
-`bin/down` does not delete the `site/`, `dataroot/`, or `database/` directories. Remove those manually if you want a completely clean state.
+`bin/down` does **not** delete the `site/`, `dataroot/`, or `database/` directories.  
+Remove those manually if you want a completely clean state.
 
 ## Directory layout
 
@@ -91,8 +123,8 @@ assets/                 configuration files and helper scripts
 backups/                demo site backups (created by bin/backup or uploaded manually)
 compose.yml             Docker Compose configuration
 bin/                    management commands
-database/               PostgreSQL data (created by init script)
+database/               MariaDB data directory (created by init script)
 dataroot/               Moodle data directory (created by init script)
-site/moodle/            Moodle codebase directory (git clone by init script)
+site/moodle/            Moodle or MuTMS codebase directory (git clone by init script)
 site/moodle/config.php  Moodle configuration file (copy of assets/config.php by init script)
 ~~~

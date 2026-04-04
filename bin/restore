@@ -6,32 +6,62 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
-if [ -z "$1" ]; then
+# --- OrbStack detection -------------------------------------------------------
+
+is_orbstack() {
+    # Host-side detection: OrbStack app exists
+    if [ -x /Applications/OrbStack.app/Contents/MacOS/orbstack ]; then
+        return 0
+    fi
+
+    # Docker engine reports OrbStack
+    if docker info 2>/dev/null | grep -q "Orbstack"; then
+        return 0
+    fi
+
+    return 1
+}
+
+# --- Enforce sudo unless OrbStack is detected --------------------------------
+
+if ! is_orbstack && [ -z "$SUDO_USER" ]; then
     echo "
-Backup name is required
+ERROR: Restore must be run with sudo unless you are using OrbStack.
+
+Examples:
+  sudo bin/restore mybackup
+  bin/restore mybackup     # only works on OrbStack
+
 "
+    exit 1
+fi
+
+# --- Validate input -----------------------------------------------------------
+
+if [ -z "$1" ]; then
+    echo "Backup name is required"
     exit 1
 fi
 
 if [ ! -f "backups/$1.tgz" ]; then
-    echo "
-Backup file backups/$1.tgz does not exist
-"
+    echo "Backup file backups/$1.tgz does not exist"
     exit 1
 fi
 
+# --- Purge old environment ----------------------------------------------------
+
 echo "Purging current Demo site ..."
 bin/down
-rm -rf database/
-rm -rf dataroot/
-rm -rf site/
-rm -f demo.env
+rm -rf database/ dataroot/ site/ demo.env
+
+# --- Extract backup -----------------------------------------------------------
 
 echo "Restoring demo site from backups/$1.tgz ..."
 
 tar -xpzf backups/$1.tgz database dataroot site demo.env
 
-# Extract only a valid DEMO_PORT from the restored demo.env
+# --- Rebuild demo.env safely --------------------------------------------------
+
 DEMO_PORT=9501
 if [ -f demo.env ]; then
     port=$(grep -E '^DEMO_PORT=[0-9]+$' demo.env | cut -d= -f2 | tr -d '\r')
@@ -46,6 +76,27 @@ DEMO_SHORTNAME=$1
 DEMO_FULLNAME=$1
 EOF
 
+# --- Fix ownership (only needed when run with sudo) ---------------------------
+
+if [ -n "$SUDO_USER" ]; then
+    REALUSER="$SUDO_USER"
+else
+    REALUSER="$USER"
+fi
+REALGROUP=$(id -gn "$REALUSER")
+
+if [ -n "$SUDO_USER" ]; then
+    echo "Fixing ownership of restored files..."
+    chown -R "$REALUSER":"$REALGROUP" site dataroot database backups demo.env
+fi
+
+# --- Start init as the real user ---------------------------------------------
+
 echo "Starting restored Demo site ..."
 
-exec bin/init
+if [ -n "$SUDO_USER" ]; then
+    # Drop SUDO_USER so bin/init does not complain
+    exec sudo -u "$REALUSER" env -u SUDO_USER bin/init
+else
+    exec bin/init
+fi

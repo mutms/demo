@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [ -n "$SUDO_USER" ]; then
+    echo "
+Do not use sudo with bin/init
+"
+    exit 1
+fi
+
 # First find out if this was called from symlink,
 # then find the real path of parent directory.
 # This is needed because macOS does not have GNU realpath.
@@ -33,17 +40,6 @@ fi
 
 mkdir -p site dataroot database backups
 
-# Determine the real user even if script is run with sudo
-if [ -n "$SUDO_USER" ]; then
-    REALUSER="$SUDO_USER"
-else
-    REALUSER="$USER"
-fi
-REALGROUP=$(id -gn "$REALUSER")
-
-# Ensure directories are owned by the user (in case restore was run with sudo)
-chown -R "$REALUSER":"$REALGROUP" site dataroot database backups demo.env
-
 if [ ! -d "site/moodle" ]; then
     git clone --depth 1 -b MuTMS_51 https://github.com/mutms/mutms.git site/moodle
 fi
@@ -52,8 +48,7 @@ if [ ! -f "site/moodle/config.php" ]; then
     cp assets/config.php site/moodle/config.php
 fi
 
-find dataroot database site -type d -exec chmod 2777 {} +
-find dataroot database site -type f -exec chmod 0666 {} +
+find dataroot -type d -exec chmod 2777 {} +
 
 docker compose up -d
 
