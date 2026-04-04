@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run bin/init-moodle with custom settings
-        run: ./bin/init-moodle --port=9502 --shortname="CI2" --fullname="CI Demo 2"
+        run: ./bin/init-moodle 9502 "CI2" "CI Demo 2"
 
       - name: Verify Moodle MUC configuration exists (installer ran)
         run: |
