@@ -14,6 +14,9 @@ DEMO_PORT="${1:-${DEMO_PORT:-9501}}"
 DEMO_SHORTNAME="${2:-${DEMO_SHORTNAME:-MuTMS}}"
 DEMO_FULLNAME="${3:-${DEMO_FULLNAME:-$DEMO_SHORTNAME}}"
 
+# Export port, because it is used from compose.yml file.
+export DEMO_PORT
+
 if [ ! -d "site" ]; then
     mkdir site
 fi
