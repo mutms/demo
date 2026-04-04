@@ -6,9 +6,9 @@
 thisfile=$( readlink "${BASH_SOURCE[0]}" ) || thisfile="${BASH_SOURCE[0]}"
 cd "$( cd "$( dirname "$thisfile" )/../" && pwd -P )"
 
-if [ ! -f "database/PG_VERSION" ]; then
+if [ ! -f "dataroot/muc/config.php" ]; then
     echo "
-DEMO site was not initialised yet, use bin/init
+DEMO site was not initialised yet
 "
     exit 1
 fi
