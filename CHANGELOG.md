@@ -8,7 +8,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Fixed
 
-- Fixed changelog diff links
+- Fixed changelog diff links and added all previous releases
 
 ## [v1.5](https://github.com/mutms/demo/compare/v1.4...v1.5) - 2026-04-04
 
