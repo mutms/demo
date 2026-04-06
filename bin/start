@@ -28,6 +28,9 @@ DEMO_PORT="${DEMO_PORT:-9501}"
 DEMO_SHORTNAME="${DEMO_SHORTNAME:-MuTMS}"
 DEMO_FULLNAME="${DEMO_FULLNAME:-$DEMO_SHORTNAME}"
 
+# Export port, because it is used from compose.yml file.
+export DEMO_PORT
+
 docker compose up -d
 
 docker compose exec db bash /mdc/mdc-wait.sh
