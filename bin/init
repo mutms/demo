@@ -72,6 +72,8 @@ docker compose exec webserver php admin/cli/install_database.php \
     --adminpass="admin" \
     --agree-license
 
+docker compose exec webserver php admin/cli/cfg.php  --name=auth_instructions "--set=Default DEMO administrator username is 'admin', password is 'admin'."
+
 echo "
 Your Demo site '${DEMO_FULLNAME}' is now available at http://127.0.0.1:${DEMO_PORT}/
   username is 'admin'
